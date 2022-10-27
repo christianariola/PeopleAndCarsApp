@@ -50,6 +50,24 @@ export const UPDATE_PERSON = gql`
 	}
 `;
 
+export const GET_PERSON = gql`
+    query personWithcars($personId: String!) {
+        person(id: $personId) {            
+            id
+            firstName
+            lastName,
+            cars {
+                id
+                year
+                make
+                model
+                price
+                personId
+            }
+        }
+    }
+`;
+
 export const GET_CARS = gql`
 	{
 		cars {

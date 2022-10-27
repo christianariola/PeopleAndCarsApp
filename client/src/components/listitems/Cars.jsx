@@ -4,9 +4,16 @@ import { EditOutlined } from "@ant-design/icons";
 import RemoveCar from "../buttons/RemoveCar";
 import UpdateCar from "../forms/UpdateCar";
 
+const getStyles = () => ({
+	card: {
+		marginBottom: '20px',
+	}
+});
+
+
 const Cars = (props) => {
 	const { id, year, make, model, price } = props.car;
-
+	const styles = getStyles();
     const [editMode, setEditMode] = useState(false);
 
 	const handleButtonClick = () => {
@@ -26,6 +33,7 @@ const Cars = (props) => {
                     <EditOutlined key="edit" onClick={handleButtonClick} />,
                     <RemoveCar id={id} />,
                 ]}
+				style={styles.card}
 			></Card>
 			)}
 		</>

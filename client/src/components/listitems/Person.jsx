@@ -4,11 +4,15 @@ import { EditOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import UpdatePerson from "../forms/UpdatePerson";
 import Cars from "./Cars";
+import { Link } from "react-router-dom";
 
 const getStyles = () => ({
 	card: {
 		width: '1000px',
 	},
+	more: {
+		marginTop: '20px',
+	}
 });
 
 const Person = (props) => {
@@ -36,6 +40,8 @@ const Person = (props) => {
                     {cars.map(car => (
                         <Cars key={car.id} car={car} />
                     ))}
+
+					<Link to={`/person/${id}`} style={styles.more}>Learn more</Link>
 				</Card>
 			)}
 		</>

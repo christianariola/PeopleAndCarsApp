@@ -1,10 +1,10 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./App.css";
-import Title from "./components/layout/Title";
-import AddPerson from "./components/forms/AddPerson";
-import PeopleList from "./components/lists/PeopleList";
-import AddCar from "./components/forms/AddCar";
+import Header from "./components/layout/Header";
+import Main from './components/pages/Main'
+import Subpage from './components/pages/Subpage'
 
 const client = new ApolloClient({
 	uri: "http://localhost:4000/graphql",
@@ -15,26 +15,15 @@ const App = () => {
 	return (
 		<>
 			<ApolloProvider client={client}>
-				<div className="App">
-					<Title
-						headingLevel={1}
-						type="heading"
-						text="People and their Cars"
-					/>
-
-					<Title
-						headingLevel={2}
-						type="subheading"
-						text="Add Person"
-					/>
-					<AddPerson />
-
-					<Title headingLevel={2} type="subheading" text="Add Car" />
-					<AddCar />
-
-					<Title headingLevel={2} type="subheading" text="Records" />
-					<PeopleList />
-				</div>
+				<BrowserRouter>
+					<div className="App">
+						<Header />
+						<Routes>
+							<Route path="/" element={<Main />} />
+							<Route path="person/:id" element={<Subpage />} />
+						</Routes>
+					</div>
+				</BrowserRouter>
 			</ApolloProvider>
 		</>
 	);
