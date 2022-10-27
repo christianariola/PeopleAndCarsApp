@@ -21,9 +21,9 @@ const PeopleList = () => {
 	return (
 		<>
 			<List grid={{ gutter: 20, column: 1 }} style={styles.list}>
-                {data.people.map(({id, firstName, lastName}) => (
+                {data.people.map(({id, firstName, lastName, cars}) => (
                     <List.Item key={id}>
-                        <Person id={id} firstName={firstName} lastName={lastName} />
+                        <Person id={id} firstName={firstName} lastName={lastName} cars={cars} />
                     </List.Item>
                 ))}
 			</List>

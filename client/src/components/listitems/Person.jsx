@@ -3,6 +3,7 @@ import RemovePerson from "../buttons/RemovePerson";
 import { EditOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import UpdatePerson from "../forms/UpdatePerson";
+import Cars from "./Cars";
 
 const getStyles = () => ({
 	card: {
@@ -11,7 +12,7 @@ const getStyles = () => ({
 });
 
 const Person = (props) => {
-	const { id, firstName, lastName } = props;
+	const { id, firstName, lastName, cars } = props;
 	const styles = getStyles();
 
 	const [editMode, setEditMode] = useState(false);
@@ -19,7 +20,6 @@ const Person = (props) => {
 	const handleButtonClick = () => {
 		setEditMode(!editMode);
 	};
-
 	return (
 		<>
 			{editMode ? (
@@ -31,8 +31,11 @@ const Person = (props) => {
 						<EditOutlined key="edit" onClick={handleButtonClick} />,
 						<RemovePerson id={id} />,
 					]}
+                    title={`${firstName} ${lastName}`}
 				>
-					{firstName} {lastName}
+                    {cars.map(car => (
+                        <Cars key={car.id} car={car} />
+                    ))}
 				</Card>
 			)}
 		</>

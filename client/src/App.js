@@ -4,6 +4,7 @@ import "./App.css";
 import Title from "./components/layout/Title";
 import AddPerson from "./components/forms/AddPerson";
 import PeopleList from "./components/lists/PeopleList";
+import AddCar from "./components/forms/AddCar";
 
 const client = new ApolloClient({
 	uri: "http://localhost:4000/graphql",
@@ -20,12 +21,16 @@ const App = () => {
 						type="heading"
 						text="People and their Cars"
 					/>
+
 					<Title
 						headingLevel={2}
 						type="subheading"
 						text="Add Person"
 					/>
 					<AddPerson />
+
+					<Title headingLevel={2} type="subheading" text="Add Car" />
+					<AddCar />
 
 					<Title headingLevel={2} type="subheading" text="Records" />
 					<PeopleList />

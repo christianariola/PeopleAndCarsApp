@@ -1,19 +1,27 @@
 import { DeleteOutlined } from "@ant-design/icons";
 import { useMutation } from "@apollo/client";
-import { REMOVE_PERSON, GET_PEOPLE } from "../../queries";
+import { REMOVE_CAR, GET_PEOPLE } from "../../queries";
 import filter from "lodash.filter";
 
-const RemovePerson = ({ id }) => {
-    const [removePerson] = useMutation(REMOVE_PERSON, {
-        update: (cache, { data: { removePerson } }) => {
+const RemoveCar = ({ id }) => {
+    const [removeCar] = useMutation(REMOVE_CAR, {
+        update: (cache, { data: { removeCar } }) => {
             const { people } = cache.readQuery({ query: GET_PEOPLE });
+
+            const newList = people.map(person => {
+                return {
+                    ...person,
+
+					cars: filter(people, (o) => {
+						return o.id !== removeCar.id;
+					}),
+                }
+            })
 
             cache.writeQuery({
                 query: GET_PEOPLE,
                 data: {
-					people: filter(people, (o) => {
-						return o.id !== removePerson.id;
-					}),
+                    people: [...newList]
                 }
             });
         }
@@ -21,10 +29,10 @@ const RemovePerson = ({ id }) => {
 
 	const handleButtonClick = () => {
 		let result = window.confirm(
-			"Are you sure you want to delete this person?"
+			"Are you sure you want to delete this car?"
 		);
 		if (result) {
-			removePerson({
+			removeCar({
 				variables: {
 					id,
 				},
@@ -43,4 +51,4 @@ const RemovePerson = ({ id }) => {
 	);
 };
 
-export default RemovePerson;
+export default RemoveCar;
