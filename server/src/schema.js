@@ -15,19 +15,27 @@ const typeDefs = gql`
         make: String!
         model: String!
         price: String!
-        person: Person
+        personId: String!
     }
 
     type Query {
         people: [Person]
+        person(id: ID!): Person
         cars: [Car]
+        car(id: ID!): Car
     }
-`;
+`
 
 const resolvers = {
     Query: {
         people: () => people,
-        cars: () => cars
+        person: (parent, args, context, info) => {
+            return people.find(person => person.id === args.id)
+        },
+        cars: () => cars,
+        car: (parent, args, context, info) => {
+            return cars.find(car => car.id === args.id)
+        }
     }
 };
 
