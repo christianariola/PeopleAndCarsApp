@@ -7,7 +7,7 @@ import Cars from "./Cars";
 
 const getStyles = () => ({
 	card: {
-		width: "500px",
+		width: '1000px',
 	},
 });
 
