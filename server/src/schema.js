@@ -4,14 +4,14 @@ import { find, remove } from 'lodash'
 
 const typeDefs = gql`
 	type Person {
-		id: ID!
+		id: String!
 		firstName: String!
 		lastName: String!
 		cars: [Car]
 	}
 
 	type Car {
-		id: ID!
+		id: String!
 		year: String!
 		make: String!
 		model: String!
@@ -21,13 +21,15 @@ const typeDefs = gql`
 
 	type Query {
 		people: [Person]
-		person(id: ID!): Person
+		person(id: String!): Person
 		cars: [Car]
 		car(id: ID!): Car
 	}
 
     type Mutation {
-        addPerson(firstName: String!, lastName: String!): Person
+        addPerson(id: String!, firstName: String!, lastName: String!): Person
+        removePerson(id: String!): Person
+        updatePerson(id: String!, firstName: String!, lastName: String!): Person
         addCar(year: String!, make: String!, model: String!, price: String!, personId: String!): Car
     }
 `;
@@ -41,7 +43,7 @@ const resolvers = {
 			});
 		},
 		person: (parent, args, context, info) => {
-			const person = people.find((person) => person.id === args.id);
+            const person = find(people, { id: args.id })
 
             return {
                 ...person,
@@ -54,15 +56,28 @@ const resolvers = {
 		},
 	},
     Mutation: {
-        addPerson: (parent, args, context, info) => {
-            const person = {
-                id: people.length + 1,
+        addPerson: (root, args) => {
+            const newPerson = {
+                id: args.id,
                 firstName: args.firstName,
-                lastName: args.lastName
+                lastName: args.lastName,
+                cars: []
             }
-            people.push(person);
+            people.push(newPerson);
+            return newPerson;
+        },
+        removePerson: (root, args) => {
+            const person = find(people, { id: args.id })
+            people.splice(people.indexOf(person), 1);
+            // cars = cars.filter(car => car.personId !== person.id);
             return person;
-        }
+        },
+        updatePerson: (root, args) => {
+            const person = find(people, { id: args.id })
+            person.firstName = args.firstName;
+            person.lastName = args.lastName;
+            return person;
+        },
     }
 };
 

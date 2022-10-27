@@ -1,4 +1,8 @@
 import { Card } from "antd";
+import RemovePerson from "../buttons/RemovePerson";
+import { EditOutlined } from "@ant-design/icons";
+import { useState } from "react";
+import UpdatePerson from "../forms/UpdatePerson";
 
 const getStyles = () => ({
 	card: {
@@ -7,14 +11,30 @@ const getStyles = () => ({
 });
 
 const Person = (props) => {
-	const { firstName, lastName } = props;
+	const { id, firstName, lastName } = props;
 	const styles = getStyles();
+
+	const [editMode, setEditMode] = useState(false);
+
+	const handleButtonClick = () => {
+		setEditMode(!editMode);
+	};
 
 	return (
 		<>
-			<Card style={styles.card}>
-				{firstName} {lastName}
-			</Card>
+			{editMode ? (
+				<UpdatePerson id={id} firstName={firstName} lastName={lastName} onButtonClick={handleButtonClick} />
+			) : (
+				<Card
+					style={styles.card}
+					actions={[
+						<EditOutlined key="edit" onClick={handleButtonClick} />,
+						<RemovePerson id={id} />,
+					]}
+				>
+					{firstName} {lastName}
+				</Card>
+			)}
 		</>
 	);
 };
