@@ -26,7 +26,7 @@ const AddCar = () => {
 				model,
 				make,
 				year: parseInt(year),
-				price,
+				price: parseFloat(price),
 				personId,
 			},
 			update: (cache, { data: { addCar } }) => {
