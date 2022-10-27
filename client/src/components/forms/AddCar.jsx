@@ -32,20 +32,20 @@ const AddCar = () => {
 			update: (cache, { data: { addCar } }) => {
 				const data = cache.readQuery({ query: GET_PEOPLE });
 
-                const newList = data.people.map(person => {
-                    if (person.id === addCar.personId) {
-                        return {
-                            ...person,
-                            cars: [...person.cars, { ...addCar }]
-                        }
-                    }
-                    return person;
-                })
+				const newList = data.people.map((person) => {
+					if (person.id === addCar.personId) {
+						return {
+							...person,
+							cars: [...person.cars, { ...addCar }],
+						};
+					}
+					return person;
+				});
 
-                cache.writeQuery({
-                    query: GET_PEOPLE,
-                    data: { ...data, people: [...newList] }
-                });
+				cache.writeQuery({
+					query: GET_PEOPLE,
+					data: { ...data, people: [...newList] },
+				});
 			},
 		});
 
@@ -117,9 +117,7 @@ const AddCar = () => {
 
 			<Form.Item
 				name="personId"
-				rules={[
-					{ required: true, message: "Please select a person" },
-				]}
+				rules={[{ required: true, message: "Please select a person" }]}
 			>
 				<Select placeholder="Select a person">
 					{!loading && !error && data ? (
