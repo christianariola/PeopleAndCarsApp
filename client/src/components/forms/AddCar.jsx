@@ -70,7 +70,7 @@ const AddCar = () => {
 					},
 				]}
 			>
-				<InputNumber placeholder="Year" />
+				<InputNumber placeholder="Year" min={1000} />
 			</Form.Item>
 
 			<Form.Item
