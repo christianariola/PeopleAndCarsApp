@@ -3,6 +3,7 @@ import { Card } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import RemoveCar from "../buttons/RemoveCar";
 import UpdateCar from "../forms/UpdateCar";
+import { formatter } from "../../currencyFormatter";
 
 const getStyles = () => ({
 	card: {
@@ -27,7 +28,7 @@ const Cars = (props) => {
 			) : (
 			<Card
 				key={id}
-				title={`${year} ${make} ${model} -> $${price}`}
+				title={`${year} ${make} ${model} -> ${formatter.format(price)}`}
 				type="inner"
                 actions={[
                     <EditOutlined key="edit" onClick={handleButtonClick} />,
