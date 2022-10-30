@@ -23,7 +23,7 @@ const typeDefs = gql`
 		people: [Person]
 		person(id: String!): Person
 		cars: [Car]
-		car(id: ID!): Car
+		car(id: String!): Car
 	}
 
 	type Mutation {
@@ -59,7 +59,8 @@ const resolvers = {
 				return person;
 			});
 		},
-		person: (args) => {
+		person: (root, args) => {
+			console.log(args)
 			const person = find(people, { id: args.id });
 
 			return {
@@ -68,13 +69,13 @@ const resolvers = {
 			};
 		},
 		cars: () => cars,
-		car: (args) => {
+		car: (root, args) => {
 			return find(cars, { id: args.id });
 		},
 	},
 	Mutation: {
 		// People
-		addPerson: (args) => {
+		addPerson: (root, args) => {
 			const newPerson = {
 				id: args.id,
 				firstName: args.firstName,
@@ -84,12 +85,12 @@ const resolvers = {
 			people.push(newPerson);
 			return newPerson;
 		},
-		removePerson: (args) => {
+		removePerson: (root, args) => {
 			const person = find(people, { id: args.id });
 			people.splice(people.indexOf(person), 1);
 			return person;
 		},
-		updatePerson: (args) => {
+		updatePerson: (root, args) => {
 			const person = find(people, { id: args.id });
 			person.firstName = args.firstName;
 			person.lastName = args.lastName;
@@ -97,12 +98,12 @@ const resolvers = {
 		},
 
 		// Cars
-		removeCar: (args) => {
+		removeCar: (root, args) => {
 			const car = find(cars, { id: args.id });
 			cars.splice(cars.indexOf(car), 1);
 			return car;
 		},
-		addCar: (args) => {
+		addCar: (root, args) => {
 			const newCar = {
 				id: args.id,
 				year: args.year,
@@ -115,7 +116,7 @@ const resolvers = {
 			cars.push(newCar);
 			return newCar;
 		},
-		updateCar: (args) => {
+		updateCar: (root, args) => {
 			const car = find(cars, { id: args.id });
 			car.year = args.year;
 			car.make = args.make;
